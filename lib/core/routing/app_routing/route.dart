@@ -5,11 +5,14 @@ import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soand/core/config/app_constants.dart';
+import 'package:soand/features/auth/presentation/pages/create_username.dart';
 import 'package:soand/features/auth/presentation/pages/login_screen.dart';
 import 'package:soand/core/routing/route_nemas/route_names.dart';
 import 'package:soand/core/services/service_locator.dart';
+import 'package:soand/features/auth/presentation/pages/register_screen.dart';
 import 'package:soand/features/auth/presentation/pages/splash_screen.dart';
 import 'package:soand/features/global/presentation/global_screen.dart';
+import 'package:soand/features/global/presentation/pages/create_chat.dart';
 import 'package:soand/features/home/presentation/home_screen.dart';
 import 'package:soand/features/navigation/presentation/pages/navigation_screen.dart';
 import 'package:soand/features/profile/presentation/profile_screen.dart';
@@ -22,20 +25,7 @@ class AppRouter {
   //::NAMES::
   static final GoRouter router = GoRouter(
     navigatorKey: navigatorKey,
-    redirect: (context, state) {
-      if (state.uri.toString().contains("/nazr.uz/")) {
-        final fullURLPath = state.uri.toString();
 
-        final productId = fullURLPath.split("/").last;
-
-        if (fullURLPath.contains("/product/")) {
-          // if (AppConstants.isActive) return "/flowers/product?productId=$id";
-          return "/splash/${jsonEncode({"productId": productId})}";
-        }
-        return AppRouteName().auth;
-      }
-      return null;
-    },
     initialLocation:
         sharedPreferences.getString(AppSharedKeys().accessToken) == null
         ? AppRouteName().splash
@@ -51,11 +41,19 @@ class AppRouter {
                 name: AppRouteName().global,
                 path: AppRouteName().global,
                 builder: (context, state) => const GlobalScreen(),
-                routes: <RouteBase>[],
+                routes: <RouteBase>[
+                  GoRoute(
+                    parentNavigatorKey: navigatorKey,
+                    name: AppRouteName().createChat,
+                    path: AppRouteName().createChat,
+                    builder: (context, state) => const CreateChatPage(),
+                    routes: <RouteBase>[],
+                  ),
+                ],
               ),
             ],
           ),
-            StatefulShellBranch(
+          StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
                 name: AppRouteName().home,
@@ -64,7 +62,8 @@ class AppRouter {
                 routes: <RouteBase>[],
               ),
             ],
-          ),  StatefulShellBranch(
+          ),
+          StatefulShellBranch(
             routes: <RouteBase>[
               GoRoute(
                 name: AppRouteName().profile,
@@ -80,6 +79,16 @@ class AppRouter {
         name: AppRouteName().login,
         path: AppRouteName().login,
         builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        name: AppRouteName().register,
+        path: AppRouteName().register,
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        name: AppRouteName().createUser,
+        path: AppRouteName().createUser,
+        builder: (context, state) => CreateUserName(),
       ),
       GoRoute(
         name: AppRouteName().splash,

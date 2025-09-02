@@ -8,6 +8,7 @@ class AppTheme {
   ThemeData darkTheme() {
     final colors = AppColors();
     return ThemeData(
+      bottomAppBarTheme: const BottomAppBarTheme(color: Colors.transparent),
       scaffoldBackgroundColor: colors.white,
       appBarTheme: AppBarTheme(
         backgroundColor: colors.white,
@@ -16,6 +17,24 @@ class AppTheme {
       ),
       extensions: [
         AppFonts(
+            fontSize15Weight900: TextStyle(
+            fontFamily: "Akatab",
+            fontSize: 15,
+            fontWeight: FontWeight.w900,
+            color: colors.black,
+          ),
+          fontSize16Weight900: TextStyle(
+            fontFamily: "Akatab",
+            fontSize: 16,
+            fontWeight: FontWeight.w900,
+            color: colors.black,
+          ),
+          fontSize24Weight900: TextStyle(
+            fontFamily: "Akatab",
+            fontSize: 24,
+            fontWeight: FontWeight.w900,
+            color: colors.black,
+          ),
           fontSize32Weight800: TextStyle(
             fontFamily: "Akatab",
             fontSize: 32,

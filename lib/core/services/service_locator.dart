@@ -2,6 +2,8 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soand/core/network/dio_handler.dart';
 import 'package:soand/core/services/shared_preference_manager.dart';
+import 'package:soand/features/auth/data/data_source/data_source.dart';
+import 'package:soand/features/auth/data/repository/repository.dart';
 
 final GetIt serviceLocator = GetIt.instance;
 
@@ -13,28 +15,12 @@ Future<void> setupServiceLocator() async {
   );
   serviceLocator.registerLazySingleton(() => DioSettings());
 
-  // serviceLocator.registerLazySingleton(
-  //     () => CatalogDataSourceImpl(serviceLocator<DioSettings>().dio()));
-  // serviceLocator.registerLazySingleton(() => CatalogRepositoryImpl(
-  //     categoryDataSource: serviceLocator<CatalogDataSourceImpl>()));
-
-  // serviceLocator.registerLazySingleton(
-  //     () => AuthDataSourceImpl(serviceLocator<DioSettings>().dio()));
-  // serviceLocator.registerLazySingleton(() =>
-  //     AuthRepositoryImpl(authDataSource: serviceLocator<AuthDataSourceImpl>()));
-
-  // serviceLocator.registerLazySingleton(
-  //     () => HomeDataSourceImpl(serviceLocator<DioSettings>().dio()));
-  // serviceLocator.registerLazySingleton(() =>
-  //     HomeRepositoryImpl(homeDataSource: serviceLocator<HomeDataSourceImpl>()));
-
-  // serviceLocator.registerLazySingleton(
-  //     () => ProfilDataSourceImpl(serviceLocator<DioSettings>().dio()));
-  // serviceLocator.registerLazySingleton(() => ProfilRepositoryImpl(
-  //     profilDataSource: serviceLocator<ProfilDataSourceImpl>()));
-
-  // serviceLocator.registerLazySingleton(
-  //     () => OrdersDataSourseImpl(serviceLocator<DioSettings>().dio()));
-  // serviceLocator.registerLazySingleton(() => OrdersRepositoryImpl(
-  //     ordersDataSourse: serviceLocator<OrdersDataSourseImpl>()));
+  serviceLocator.registerLazySingleton(
+    () => AuthDataSourceImpl(serviceLocator<DioSettings>().dio()),
+  );
+  serviceLocator.registerLazySingleton(
+    () => AuthRepositoryImpl(
+      authDataSource: serviceLocator<AuthDataSourceImpl>(),
+    ),
+  );
 }

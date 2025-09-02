@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,19 +9,20 @@ import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 import 'package:soand/core/extension/extension.dart';
-import 'package:soand/core/services/log.dart';
+import 'package:soand/features/auth/data/model/register.dart';
 import 'package:soand/features/auth/presentation/bloc/auth_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController nameController;
   late TextEditingController passwordController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -71,14 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "login",
+                        "Sign up",
                         style: context.style.fontSize32Weight800.copyWith(
                           color: context.colors.white,
                         ),
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.pushReplacementNamed(context.route.register);
+                          context.pushReplacementNamed(context.route.login);
                         },
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -91,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: context.colors.blue,
                           ),
                           child: Text(
-                            "Sign up",
+                            "Login",
                             style: context.style.fontSize20Weight800,
                           ),
                         ),
@@ -100,7 +102,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Expanded(
                     child: Container(
-                      // height: MediaQuery.sizeOf(context).height - 250,
                       width: double.maxFinite,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
@@ -115,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           const Gap(4),
                           Text(
-                            "@user name",
+                            "Name",
                             style: context.style.fontSize15Weight400,
                           ),
                           TextField(
@@ -142,10 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             style: context.style.fontSize15Weight400,
                           ),
                           TextField(
+                            controller: passwordController,
                             obscureText: true,
-controller: passwordController,
                             decoration: InputDecoration(
                               fillColor: context.colors.white,
+
                               filled: true,
                               border: const OutlineInputBorder(),
                               enabledBorder: OutlineInputBorder(
@@ -191,12 +193,12 @@ controller: passwordController,
                     sliderRotate: false,
                     borderRadius: 60,
 
-                    sliderButtonIconPadding: 0,
+                    // sliderButtonIconPadding: 10,
                     outerColor: state.isLoading
                         ? Colors.transparent
                         : const Color(0xFFD9D9D9),
                     innerColor: Colors.transparent,
-                    // sliderButtonIconSize: 10,
+                    sliderButtonIconSize: 10,
 
                     // sliderButtonYOffset: 1,
                     sliderButtonIcon: Container(
@@ -209,7 +211,7 @@ controller: passwordController,
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: LinearGradient(
-                          colors: [Color(0xFFEC590C), Color(0xFFFE0764)],
+                          colors: [Color(0xFF04B6E9), Color(0xFF01F8BB)],
                         ),
                       ),
                       child: SvgPicture.asset(context.icon.iz),
@@ -217,6 +219,8 @@ controller: passwordController,
                     elevation: 0,
 
                     submittedIcon: Lottie.asset("assets/lotti/login.json"),
+
+                    sliderButtonIconPadding: 0,
 
                     onSubmit: () async {
                       context.read<AuthBloc>().add(
@@ -228,18 +232,25 @@ controller: passwordController,
                       });
                       await completer.future;
                       final completerr = Completer<void>();
+
                       context.read<AuthBloc>().add(
-                        LoginEvent(
-                          name: nameController.text,
-                          password: passwordController.text,
+                        RegisterEvent(
+                          model: RegisterModel(
+                            fullName: nameController.text,
+                            password: passwordController.text,
+                          ),
                           onSuccess: () {
-                            context.goNamed(context.route.home);
+                            context.read<AuthBloc>().add(
+                              IslocadingEvent(isLoading: false),
+                            );
                             completerr.complete();
+                            context.pushNamed(context.route.createUser);
                           },
                           onFailure: (value) {
-                            LogService.e(value);
+                            context.read<AuthBloc>().add(
+                              IslocadingEvent(isLoading: false),
+                            );
                             completerr.complete();
-
                           },
                         ),
                       );

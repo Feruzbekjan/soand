@@ -7,6 +7,7 @@ class AppFonts extends ThemeExtension<AppFonts> {
 
   final TextStyle fontSize30Weight700;
 
+  final TextStyle fontSize24Weight900;
   final TextStyle fontSize24Weight700;
   final TextStyle fontSize24Weight500;
   final TextStyle fontSize24Weight400;
@@ -27,11 +28,13 @@ class AppFonts extends ThemeExtension<AppFonts> {
   final TextStyle fontSize18Weight500;
   final TextStyle fontSize18Weight400;
 
+  final TextStyle fontSize16Weight900;
   final TextStyle fontSize16Weight700;
   final TextStyle fontSize16Weight600;
   final TextStyle fontSize16Weight500;
   final TextStyle fontSize16Weight400;
 
+  final TextStyle fontSize15Weight900;
   final TextStyle fontSize15Weight400;
 
   final TextStyle fontSize14Weight700;
@@ -52,9 +55,11 @@ class AppFonts extends ThemeExtension<AppFonts> {
   final TextStyle fontSize7Weight600;
 
   AppFonts({
+    required this.fontSize15Weight900,
     required this.fontSize32Weight800,
     required this.fontSize32Weight500,
     required this.fontSize30Weight700,
+    required this.fontSize24Weight900,
     required this.fontSize24Weight700,
     required this.fontSize24Weight500,
     required this.fontSize24Weight400,
@@ -70,6 +75,7 @@ class AppFonts extends ThemeExtension<AppFonts> {
     required this.fontSize18Weight600,
     required this.fontSize18Weight500,
     required this.fontSize18Weight400,
+    required this.fontSize16Weight900,
     required this.fontSize16Weight700,
     required this.fontSize16Weight600,
     required this.fontSize16Weight500,
@@ -104,6 +110,7 @@ class AppFonts extends ThemeExtension<AppFonts> {
       return this;
     }
     return AppFonts(
+      fontSize24Weight900: fontSize24Weight900,
       fontSize12Weight600: fontSize12Weight600,
       fontSize13Weight400: fontSize13Weight400,
       fontSize13Weight300: fontSize13Weight300,
@@ -140,6 +147,8 @@ class AppFonts extends ThemeExtension<AppFonts> {
       fontSize12Weight300: fontSize12Weight300,
       fontSize32Weight800: fontSize32Weight800,
       fontSize20Weight800: fontSize20Weight800,
+      fontSize16Weight900: fontSize16Weight900,
+      fontSize15Weight900: fontSize15Weight900,
     );
   }
 }

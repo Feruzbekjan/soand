@@ -4,6 +4,9 @@ class AppColors {
   final white = const Color(0xFFFFFFFF);
   final black = const Color(0xFF212529);
   final main = const Color(0xFF242424);
+  final black202020 = const Color(0xFF202020);
+  final grey393939 = const Color(0xFF393939);
+  final grey787878 = const Color(0xFF787878);
   final gray500 = const Color(0xFFADB5BD);
   final gray600 = const Color(0xFF6C757D);
   final gray100 = const Color(0xFFF2F4F7);
@@ -16,6 +19,8 @@ class AppColors {
   final pink80 = const Color.fromRGBO(217, 45, 32, 0.08);
   final red = const Color(0xFFD92D20);
   final green = const Color(0xFF1AC47D);
+  final green1E353A = const Color(0xFF1E353A);
   final blueGradient1 = const Color(0xFF61E0C2);
   final blueGradient2 = const Color(0xFF28B493);
+  final bluuue = const Color(0xFF03B3EB);
 }

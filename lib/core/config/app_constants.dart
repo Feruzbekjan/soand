@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String baseUrl = 'https://api.nazr.uz';
+  static const String baseUrl = 'https://api.soand.uz/';
   static const String language = 'uz';
 }
 

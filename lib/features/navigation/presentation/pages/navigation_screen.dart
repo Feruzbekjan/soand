@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
+import 'package:soand/core/extension/extension.dart';
 import 'package:soand/features/navigation/presentation/widgets/navigation_item.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -22,53 +22,55 @@ class _NavigationScreenState extends State<NavigationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      backgroundColor: Colors.transparent,
       resizeToAvoidBottomInset: true,
-      body: widget.statefulNavigationShell,
-      // floatingActionButton: SpeedDial(
-      //   animatedIcon: AnimatedIcons.menu_close,
-      //   children: [
-      //     SpeedDialChild(
-      //       child: Icon(Icons.add),
-      //       label: 'Qoʻshish',
-      //       onTap: () => print('Qoʻshish bosildi'),
-      //     ),
-      //     SpeedDialChild(
-      //       child: Icon(Icons.edit),
-      //       label: 'Tahrirlash',
-      //       onTap: () => print('Tahrirlash bosildi'),
-      //     ),
-      //   ],
-      // ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.paddingOf(context).bottom + 8,
-        ),
-        child: Builder(
-          builder: (context) {
-            return Container(
-              width: 200,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: List.generate(3, (index) {
-                  return GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () async {
-                      widget.statefulNavigationShell.goBranch(
-                        index,
-                        initialLocation:
-                            widget.statefulNavigationShell.currentIndex == index,
-                      );
-                    },
-                    child: NavigationItem(
-                      context: context,
-                      index: index,
-                      selectedIndex: widget.statefulNavigationShell.currentIndex,
-                    ),
-                  );
-                }),
+      body: SafeArea(bottom: false, child: widget.statefulNavigationShell),
+      bottomNavigationBar: BottomAppBar(
+        padding: EdgeInsets.zero,
+        // color: Colors.transparent,
+        child: SafeArea(
+          minimum: const EdgeInsets.only(bottom: 8, right: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: context.colors.black202020,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(90),
+                    topRight: Radius.circular(18),
+                    bottomLeft: Radius.circular(18),
+                    bottomRight: Radius.circular(90),
+                  ),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: List.generate(3, (index) {
+                    return GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        widget.statefulNavigationShell.goBranch(
+                          index,
+                          initialLocation:
+                              widget.statefulNavigationShell.currentIndex ==
+                              index,
+                        );
+                      },
+                      child: NavigationItem(
+                        context: context,
+                        index: index,
+                        selectedIndex:
+                            widget.statefulNavigationShell.currentIndex,
+                      ),
+                    );
+                  }),
+                ),
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
 
